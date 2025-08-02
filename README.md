@@ -30,10 +30,12 @@ cd rewegain
 chmod +x main.sh
 ```
 
-3. Run the main script with your email address:
+3. Run the main script:
 ```bash
-./main.sh your_email@example.com
+./main.sh
 ```
+
+The script will prompt for your email address when needed (for Git SSH key generation).
 
 The script will automatically:
 - Update the system

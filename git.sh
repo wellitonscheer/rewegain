@@ -8,11 +8,12 @@ log_message "Starting Git installation and configuration..."
 log_message "Installing Git..."
 sudo apt install git -y 2>&1 | tee -a "$LOG_FILE"
 
-# Ensure EMAIL environment variable is set
+# Prompt for email if not set
 if [ -z "$EMAIL" ]; then
-  log_error "EMAIL environment variable is not set"
-  echo "Error: EMAIL environment variable is not set."
-  exit 1
+  echo "Git requires an email address for SSH key generation."
+  read -p "Please enter your email address: " EMAIL
+  export EMAIL="$EMAIL"
+  log_message "Email provided by user: $EMAIL"
 fi
 
 log_message "Email configured: $EMAIL"

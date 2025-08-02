@@ -13,19 +13,12 @@ export -f log_error
 log_message "=== Starting Rewegain Installation ==="
 log_message "Log file: $LOG_FILE"
 
-# Check if email is passed as a parameter
-if [ -z "$1" ]; then
-  log_error "No email provided."
-  echo "Error: No email provided."
-  echo "Usage: $0 your_email@example.com"
-  exit 1
-fi
-
-# Use the provided email from the first parameter
-export EMAIL="$1"
+# Set host name
 export HOST_NAME="caie-pc"
-log_message "Email: $EMAIL"
 log_message "Host name: $HOST_NAME"
+
+# Email will be prompted when needed (e.g., in git.sh)
+export EMAIL=""
 
 # Update system
 log_message "Updating system packages..."
