@@ -1,0 +1,22 @@
+# Log files
+rewegain_install.log
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Downloaded files
+Downloads/
+*.deb
+*.AppImage 
