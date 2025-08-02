@@ -9,8 +9,8 @@ Every installation script must follow this structure:
 ```bash
 #!/bin/bash
 
-# Use shared logging setup from main.sh
-# LOG_FILE and logging functions are exported by main.sh
+# Source logging setup
+source "$(dirname "$(realpath "$0")")/logging.sh"
 
 log_message "Starting [Application] installation..."
 
@@ -135,8 +135,8 @@ Before submitting a new script:
 ```bash
 #!/bin/bash
 
-# Use shared logging setup from main.sh
-# LOG_FILE and logging functions are exported by main.sh
+# Source logging setup
+source "$(dirname "$(realpath "$0")")/logging.sh"
 
 log_message "Starting Example App installation..."
 
