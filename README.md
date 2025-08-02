@@ -6,6 +6,10 @@ A collection of shell scripts to automate the installation and configuration of 
 
 After a fresh Ubuntu installation, it's time-consuming and annoying to remember and manually install all the applications and tools you had in your previous setup. This project automates that process by providing a set of scripts that install and configure commonly used software.
 
+## Note
+
+This project was created for my personal use, so some configurations and choices are specific to my setup and preferences. However, feel free to use, modify, and adapt it for your own needs!
+
 ## Quick Start
 
 ### Prerequisites
