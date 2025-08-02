@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# Check if email is passed as a parameter
+if [ -z "$1" ]; then
+  echo "Error: No email provided."
+  echo "Usage: $0 your_email@example.com"
+  exit 1
+fi
+
+# Use the provided email from the first parameter
+export EMAIL="$1"
+export HOST_NAME="caie-pc"
+
 sudo apt update
 sudo apt install curl
 sudo add-apt-repository universe
