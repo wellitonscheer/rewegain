@@ -80,6 +80,36 @@ else
 fi
 ```
 
+### Download Latest Version and Install
+When possible, always fetch the latest version instead of hardcoding version numbers:
+
+```bash
+# Fetch latest version from GitHub API
+log_message "Fetching latest [Application] release information..."
+LATEST_VERSION=$(curl -s https://api.github.com/repos/owner/repo/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+log_message "Latest [Application] version: $LATEST_VERSION"
+
+# Construct dynamic URLs and filenames
+DEB_URL="https://github.com/owner/repo/releases/download/$LATEST_VERSION/AppName-linux-${LATEST_VERSION#v}-amd64.deb"
+DEB_FILE="$HOME/Downloads/programs/AppName-linux-${LATEST_VERSION#v}-amd64.deb"
+
+log_message "Downloading [Application] .deb package from: $DEB_URL"
+if curl -L "$DEB_URL" -o "$DEB_FILE" 2>&1 | tee -a "$LOG_FILE"; then
+    log_message "Download completed: $DEB_FILE"
+else
+    log_error "Download failed"
+    exit 1
+fi
+
+log_message "Installing [Application] .deb package..."
+if sudo dpkg -i "$DEB_FILE" 2>&1 | tee -a "$LOG_FILE"; then
+    log_message "[Application] installed successfully"
+else
+    log_error "[Application] installation failed"
+    exit 1
+fi
+```
+
 ### AppImage Installation
 ```bash
 log_message "Downloading [Application] AppImage..."
@@ -113,6 +143,31 @@ Available environment variables:
 - `$HOST_NAME` - Host name for SSH config (set by main.sh)
 - `$SHELL_CONFIG` - Path to shell config file (set by main.sh)
 
+## Version Management
+
+### When to Use Latest Versions
+- **GitHub Releases**: Use GitHub API to fetch latest release tags
+- **Package Managers**: Use `apt install` without version pinning when possible
+- **AppImages**: Download latest from official sources
+- **Snap/Flatpak**: Use latest channel when available
+
+### When to Pin Versions
+- **Stability Requirements**: When specific versions are needed for compatibility
+- **Breaking Changes**: When newer versions have known issues
+- **Corporate Requirements**: When specific versions are mandated
+
+### Version Detection Patterns
+```bash
+# GitHub API (most common)
+LATEST_VERSION=$(curl -s https://api.github.com/repos/owner/repo/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+
+# Alternative: Parse HTML (when API not available)
+LATEST_VERSION=$(curl -s "https://github.com/owner/repo/releases" | grep -o 'v[0-9]\+\.[0-9]\+\.[0-9]\+' | head -1)
+
+# Alternative: Use package manager
+LATEST_VERSION=$(apt-cache policy package-name | grep 'Candidate:' | awk '{print $2}')
+```
+
 ## Testing Requirements
 
 Before submitting a new script:
@@ -129,6 +184,8 @@ Before submitting a new script:
 3. **Hardcoded paths** - Use environment variables when possible
 4. **No user feedback** - Provide clear success/failure messages
 5. **Missing dependencies** - Document and install required dependencies
+6. **Hardcoded versions** - Always fetch latest versions when possible
+7. **No version logging** - Log which version is being installed
 
 ## Example Complete Script
 
