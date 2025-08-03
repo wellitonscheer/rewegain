@@ -25,14 +25,17 @@ log_message "Updating system packages..."
 sudo apt update 2>&1 | tee -a "$LOG_FILE"
 
 # Install dependencies
-log_message "Installing curl..."
-sudo apt install curl -y 2>&1 | tee -a "$LOG_FILE"
+log_message "Installing dependencies..."
+sudo apt install -y \
+    curl \
+    wget \
+    bash \
+    build-essential \
+    htop \
+    libfuse2t64 2>&1 | tee -a "$LOG_FILE"
 
 log_message "Adding universe repository..."
 sudo add-apt-repository universe -y 2>&1 | tee -a "$LOG_FILE"
-
-log_message "Installing libfuse2t64..."
-sudo apt install libfuse2t64 -y 2>&1 | tee -a "$LOG_FILE"
 
 SHELL_CONFIG="$HOME/.bashrc"
 log_message "Script directory: $SCRIPT_DIR"
