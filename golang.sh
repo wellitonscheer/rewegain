@@ -79,7 +79,7 @@ fi
 
 # Add Go to PATH in .profile if not already present
 PROFILE_FILE="$HOME/.profile"
-GO_PATH_EXPORT='export PATH=$PATH:/usr/local/go/bin'
+GO_PATH_EXPORT='export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin'
 
 log_message "Checking if Go is already in PATH..."
 if grep -q "/usr/local/go/bin" "$PROFILE_FILE" 2>/dev/null; then
